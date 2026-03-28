@@ -33,3 +33,6 @@ purgatory = "purgatory.cli:main"
 Homepage = "https://github.com/oldmanstillcan/purgatory"
 Repository = "https://github.com/oldmanstillcan/purgatory"
 Issues = "https://github.com/oldmanstillcan/purgatory/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["purgatory"]
