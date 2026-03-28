@@ -1,0 +1,59 @@
+name: "Evasion Report"
+description: "Report a pattern that bypasses Purgatory's detection"
+title: "[evasion] "
+labels: ["evasion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing Purgatory's detection. Every evasion report makes the tool stronger.
+
+        You don't need to share a full exploit — just enough for us to reproduce and add detection.
+
+  - type: textarea
+    id: technique
+    attributes:
+      label: Evasion Technique
+      description: What did you do that Purgatory missed?
+      placeholder: "e.g., Split the reverse shell command across two variables and concatenated at runtime"
+    validations:
+      required: true
+
+  - type: textarea
+    id: skill-structure
+    attributes:
+      label: Skill Structure
+      description: Paste or describe the skill files (SKILL.md, scripts, etc.) that evade detection.
+      render: markdown
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer should have caught this?
+      options:
+        - "Layer 1: Static Scan"
+        - "Layer 2: Prompt Review"
+        - "Both"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: purgatory-output
+    attributes:
+      label: Purgatory Output
+      description: What score/tier did the malicious skill receive?
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: Suggested Detection (optional)
+      description: If you have a regex or detection approach in mind, share it here.
+      render: python
+    validations:
+      required: false

@@ -1,0 +1,32 @@
+name: "Pattern Request"
+description: "Suggest a new detection pattern"
+title: "[pattern] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: pattern
+    attributes:
+      label: What should Purgatory detect?
+      placeholder: "e.g., Base64-encoded shell commands in Python scripts"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer?
+      options:
+        - "Layer 1: Static Scan"
+        - "Layer 2: Prompt Review"
+        - "New layer"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: example
+    attributes:
+      label: Example of the pattern in the wild
+      render: python
+    validations:
+      required: false
