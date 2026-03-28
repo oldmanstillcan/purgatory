@@ -161,6 +161,36 @@ Report saved: /path/to/skill/PURGATORY-REPORT.md
 
 **Purgatory is a first-pass vetting framework, not a guarantee of safety.** It raises the bar significantly over blind installation, but it does not replace manual code review for high-risk skills. Always review skills that handle API keys, social tokens, or financial data.
 
+## Testing
+
+29 tests across 4 categories, all passing:
+
+```bash
+pip install pytest
+PYTHONPATH=. pytest tests/ -v
+```
+
+### Test Fixtures
+
+Three purpose-built skills in `tests/fixtures/`:
+
+| Fixture | Purpose | Expected Tier |
+|---|---|---|
+| `clean-skill` | No dangerous patterns, no injection | Tier 3 (production) |
+| `malicious-skill` | Reverse shell, hardcoded keys, prompt override, pipe-to-shell | Tier 0 (do not install) |
+| `borderline-skill` | Env access, subprocess calls, HTTP references | Mid-tier (context-dependent) |
+
+### What's Covered
+
+- **Static scanner**: secret detection, shell patterns, reverse shells, env access, result structure
+- **Prompt reviewer**: injection detection, hidden actions, SSH read directives, false positive avoidance
+- **Scoring engine**: tier assignment, context multipliers, hard fail cap, behavior clusters
+- **CLI integration**: all subcommands, report generation, error handling
+
+### Evasion Testing
+
+We know what Purgatory doesn't catch (see Threat Model above). If you can write a skill that is clearly malicious but scores Tier 3, we want to know. Open an issue with the `[evasion]` tag.
+
 ## How It Was Built
 
 This tool was designed, built, and code-reviewed using a multi-LLM pipeline:
@@ -195,4 +225,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add patterns, report evasions,
 
 - [Full Product Spec](docs/PRODUCT-SPEC.md)
 - [Security Policy](SECURITY.md)
-- [Trust Matrix Methodology](docs/TRUST-MATRIX.md)
+- Trust Matrix Methodology — coming in v0.2
